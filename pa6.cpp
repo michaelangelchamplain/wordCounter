@@ -29,6 +29,7 @@ void main()
 	
 	cout << "Name of file (sans .txt): ";
 	cin >> textFile;
+	cout << endl;
 	textFile += ".txt";
 	ifstream inFile( textFile );
 	
@@ -38,15 +39,17 @@ void main()
 		//cout << word << endl;
 		word = removeCapsAndPunct( word );
 		//cout << word << endl;
-
-		wordList->insert(word);
+		if( word != "" )
+		{
+			wordList->insert(word);
+		}
 		
 		word = "";
 	}
 
 	displayForward(wordList);
 	
-
+	cout << endl;
 	system("pause");
 }
 
@@ -107,6 +110,10 @@ void displayForward(DoublyLinkedList *ptr)
    DoublyLinkedList *tmp;
 
    tmp = ptr;
+   tmp = tmp->getNext();
+
+   cout << "Word List (Alphabetical and Enumerated): " << endl << endl;
+
    while (tmp != NULL)
    {
       cout << tmp->getData() << " - " << tmp->getCount() << endl;
