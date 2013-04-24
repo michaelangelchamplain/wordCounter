@@ -3,7 +3,9 @@ Michael Angel
 PA6
 */
 #include "doublyLinkedList.h"
+#include "TimerSystem.h"
 
+#include <iomanip>
 #include <iostream>
 #include <fstream>
 #include <algorithm>
@@ -19,8 +21,14 @@ void displayForward(DoublyLinkedList *ptr);
 
 void main()
 {
-	string testWord = "Mike's";
-	removeCapsAndPunct( testWord );
+	TimerSystem timer;
+	double timerTime;
+	cout.setf(ios::fixed | ios::showpoint);
+	cout.precision(16);
+
+	srand(unsigned(time(NULL)));
+
+	
 
 	string word;
 	string textFile;
@@ -31,14 +39,14 @@ void main()
 	cin >> textFile;
 	cout << endl;
 	textFile += ".txt";
-	ifstream inFile( textFile );
+
+	ifstream inFile( textFile );//Get
 	
+	timer.startClock();//Time to polulate the list and calculate it.
 	while( inFile.good() )
 	{
 		inFile >> word;
-		//cout << word << endl;
 		word = removeCapsAndPunct( word );
-		//cout << word << endl;
 		if( word != "" )
 		{
 			wordList->insert(word);
@@ -46,10 +54,13 @@ void main()
 		
 		word = "";
 	}
+	timerTime = timer.getTime();//The number of times each word as been used has been calculated 
+								//and its in alphabetical order
 
 	displayForward(wordList);
+
 	
-	cout << endl;
+	cout << endl << "Time to do these operations: " << timerTime << endl << endl;
 	system("pause");
 }
 

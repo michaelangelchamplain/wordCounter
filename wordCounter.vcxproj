@@ -77,11 +77,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="doublyLinkedList.h" />
-    <ClInclude Include="word.h" />
+    <ClInclude Include="TimerSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="doublyLinkedList.cpp" />
     <ClCompile Include="pa6.cpp" />
+    <ClCompile Include="TimerSystem.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
