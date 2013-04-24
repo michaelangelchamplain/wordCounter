@@ -3,14 +3,52 @@ Michael Angel
 PA6
 */
 #include "doublyLinkedList.h"
-#include "word.h"
-
 
 #include <iostream>
+#include <fstream>
 #include <algorithm>
 
 #include <string>
 using namespace std;
+
+string toLowerCase( string word );
+string removePunctuation( string word );
+string removeCapsAndPunct( string word );
+void displayForward(DoublyLinkedList *ptr);
+
+
+void main()
+{
+	string testWord = "Mike's";
+	removeCapsAndPunct( testWord );
+
+	string word;
+	string textFile;
+	DoublyLinkedList *wordList;
+	wordList = new DoublyLinkedList;
+	
+	cout << "Name of file (sans .txt): ";
+	cin >> textFile;
+	textFile += ".txt";
+	ifstream inFile( textFile );
+	
+	while( inFile.good() )
+	{
+		inFile >> word;
+		//cout << word << endl;
+		word = removeCapsAndPunct( word );
+		//cout << word << endl;
+
+		wordList->insert(word);
+		
+		word = "";
+	}
+
+	displayForward(wordList);
+	
+
+	system("pause");
+}
 
 //Helper functions
 
@@ -20,9 +58,19 @@ using namespace std;
 *********************************************************/
 string toLowerCase( string word )
 {
-	string lowerCase;
+	int length = word.length();
 
-	return lowerCase;
+	for( int j = 0; j < length; j++ )
+	{
+		if( word[j] >= 65 && word[j] <= 90 )
+		{
+			word[j] += 32;
+		}
+	}
+
+	//cout << "Testing remove caps: " << word << endl;
+	
+	return word;
 }
 
 /* Pre: A string that contains alpha characters or punctuation
@@ -31,56 +79,37 @@ string toLowerCase( string word )
 *********************************************************/
 string removePunctuation( string word )
 {
-	string removedPunct;
+	char puncts[] = { '"', '\'', '(', ')', '[', ']', '{', '}', ':', ';', ',', '.', '<', '>', '?', '/', '\\',
+					  '|', '`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '-', '_', '=', '+'};   
+	int arraySize = sizeof( puncts )/sizeof(puncts[0]);
 
-	return removedPunct;
-}
-
-string removeCapsAndPunct( string word )
-{
-	char puncts[] = { '"', '\'', '(', ')', '!', '?', '%', '$', '#', ';', ':' };   
-	int length = word.length();
-
-	for( int i = 0; i < length; i++ )
+	for( int i = 0; i < arraySize; i++ )
 	{
 		word.erase( remove( word.begin(), word.end(), puncts[i] ), word.end() );
 	}
 
-	cout << "Testing remove punct: " << word << endl;
-
-	length = word.length();
-
-	for( int j = 0; j < length; j++ )
-	{
-		if( word[j] >= 65 && word[j] <= 90 )
-		{
-			word[j] = word[j] += 32;
-		}
-	}
-
-	cout << "Testing remove caps: " << word << endl;
-
+	//cout << "Testing remove punct: " << word << endl;
 
 	return word;
 }
 
-/* Pre: A linked list of Words
-*  Post: An alphabetically sorted linked list of words
-*  Purpose: To make an alphabetically sorted linked list
-*********************************************************/
-Word sortAlphabetically( Word wordLL )
+string removeCapsAndPunct( string word )
 {
-	return wordLL;
+	word = removePunctuation( word );
+
+	word = toLowerCase( word );
+
+	return word;
 }
 
-
-
-
-void main()
+void displayForward(DoublyLinkedList *ptr)
 {
-	string testWord = "Mike's";
+   DoublyLinkedList *tmp;
 
-	removeCapsAndPunct( testWord );
-
-	system("pause");
+   tmp = ptr;
+   while (tmp != NULL)
+   {
+      cout << tmp->getData() << " - " << tmp->getCount() << endl;
+      tmp = tmp->getNext();
+   }
 }
